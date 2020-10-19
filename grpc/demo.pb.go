@@ -5,6 +5,7 @@ package tag
 
 import (
 	context "context"
+	encoding_binary "encoding/binary"
 	fmt "fmt"
 	proto "github.com/gogo/protobuf/proto"
 	grpc "google.golang.org/grpc"
@@ -110,6 +111,138 @@ func (m *UserInfo) GetMail() string {
 	return ""
 }
 
+type ProductInfo struct {
+	ProductID string  `protobuf:"bytes,1,opt,name=ProductID,proto3" json:"ProductID,omitempty"`
+	Brand     string  `protobuf:"bytes,2,opt,name=Brand,proto3" json:"Brand,omitempty"`
+	Name      string  `protobuf:"bytes,3,opt,name=Name,proto3" json:"Name,omitempty"`
+	Old       string  `protobuf:"bytes,4,opt,name=Old,proto3" json:"Old,omitempty"`
+	Label     string  `protobuf:"bytes,5,opt,name=Label,proto3" json:"Label,omitempty"`
+	Color     string  `protobuf:"bytes,6,opt,name=Color,proto3" json:"Color,omitempty"`
+	SalePrice float64 `protobuf:"fixed64,7,opt,name=SalePrice,proto3" json:"SalePrice,omitempty"`
+	Price     float64 `protobuf:"fixed64,8,opt,name=Price,proto3" json:"Price,omitempty"`
+	Size_     string  `protobuf:"bytes,9,opt,name=Size,proto3" json:"Size,omitempty"`
+	Sum       int32   `protobuf:"varint,10,opt,name=Sum,proto3" json:"Sum,omitempty"`
+	UpdateId  string  `protobuf:"bytes,11,opt,name=UpdateId,proto3" json:"UpdateId,omitempty"`
+	DeleteId  string  `protobuf:"bytes,12,opt,name=DeleteId,proto3" json:"DeleteId,omitempty"`
+}
+
+func (m *ProductInfo) Reset()         { *m = ProductInfo{} }
+func (m *ProductInfo) String() string { return proto.CompactTextString(m) }
+func (*ProductInfo) ProtoMessage()    {}
+func (*ProductInfo) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0c9e4fc13f7bb3ac, []int{1}
+}
+func (m *ProductInfo) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ProductInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ProductInfo.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ProductInfo) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ProductInfo.Merge(m, src)
+}
+func (m *ProductInfo) XXX_Size() int {
+	return m.Size()
+}
+func (m *ProductInfo) XXX_DiscardUnknown() {
+	xxx_messageInfo_ProductInfo.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ProductInfo proto.InternalMessageInfo
+
+func (m *ProductInfo) GetProductID() string {
+	if m != nil {
+		return m.ProductID
+	}
+	return ""
+}
+
+func (m *ProductInfo) GetBrand() string {
+	if m != nil {
+		return m.Brand
+	}
+	return ""
+}
+
+func (m *ProductInfo) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *ProductInfo) GetOld() string {
+	if m != nil {
+		return m.Old
+	}
+	return ""
+}
+
+func (m *ProductInfo) GetLabel() string {
+	if m != nil {
+		return m.Label
+	}
+	return ""
+}
+
+func (m *ProductInfo) GetColor() string {
+	if m != nil {
+		return m.Color
+	}
+	return ""
+}
+
+func (m *ProductInfo) GetSalePrice() float64 {
+	if m != nil {
+		return m.SalePrice
+	}
+	return 0
+}
+
+func (m *ProductInfo) GetPrice() float64 {
+	if m != nil {
+		return m.Price
+	}
+	return 0
+}
+
+func (m *ProductInfo) GetSize_() string {
+	if m != nil {
+		return m.Size_
+	}
+	return ""
+}
+
+func (m *ProductInfo) GetSum() int32 {
+	if m != nil {
+		return m.Sum
+	}
+	return 0
+}
+
+func (m *ProductInfo) GetUpdateId() string {
+	if m != nil {
+		return m.UpdateId
+	}
+	return ""
+}
+
+func (m *ProductInfo) GetDeleteId() string {
+	if m != nil {
+		return m.DeleteId
+	}
+	return ""
+}
+
 type HelloRequest struct {
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 }
@@ -118,7 +251,7 @@ func (m *HelloRequest) Reset()         { *m = HelloRequest{} }
 func (m *HelloRequest) String() string { return proto.CompactTextString(m) }
 func (*HelloRequest) ProtoMessage()    {}
 func (*HelloRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0c9e4fc13f7bb3ac, []int{1}
+	return fileDescriptor_0c9e4fc13f7bb3ac, []int{2}
 }
 func (m *HelloRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -162,7 +295,7 @@ func (m *HelloReply) Reset()         { *m = HelloReply{} }
 func (m *HelloReply) String() string { return proto.CompactTextString(m) }
 func (*HelloReply) ProtoMessage()    {}
 func (*HelloReply) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0c9e4fc13f7bb3ac, []int{2}
+	return fileDescriptor_0c9e4fc13f7bb3ac, []int{3}
 }
 func (m *HelloReply) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -208,7 +341,7 @@ func (m *StatusReply) Reset()         { *m = StatusReply{} }
 func (m *StatusReply) String() string { return proto.CompactTextString(m) }
 func (*StatusReply) ProtoMessage()    {}
 func (*StatusReply) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0c9e4fc13f7bb3ac, []int{3}
+	return fileDescriptor_0c9e4fc13f7bb3ac, []int{4}
 }
 func (m *StatusReply) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -253,6 +386,7 @@ func (m *StatusReply) GetMsg() string {
 
 func init() {
 	proto.RegisterType((*UserInfo)(nil), "tag.UserInfo")
+	proto.RegisterType((*ProductInfo)(nil), "tag.ProductInfo")
 	proto.RegisterType((*HelloRequest)(nil), "tag.HelloRequest")
 	proto.RegisterType((*HelloReply)(nil), "tag.HelloReply")
 	proto.RegisterType((*StatusReply)(nil), "tag.StatusReply")
@@ -261,26 +395,37 @@ func init() {
 func init() { proto.RegisterFile("grpc/demo.proto", fileDescriptor_0c9e4fc13f7bb3ac) }
 
 var fileDescriptor_0c9e4fc13f7bb3ac = []byte{
-	// 293 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x4c, 0x90, 0x4d, 0x4e, 0xc3, 0x30,
-	0x10, 0x85, 0xe3, 0xfe, 0x51, 0xa6, 0xfc, 0x54, 0x23, 0x16, 0x56, 0x17, 0x56, 0xe5, 0x05, 0x42,
-	0x42, 0x2a, 0x52, 0x7b, 0x03, 0x60, 0x01, 0x1b, 0x16, 0x45, 0x1c, 0xc0, 0x6d, 0x86, 0x34, 0x52,
-	0x5c, 0x07, 0xdb, 0x59, 0xf4, 0x16, 0x9c, 0x80, 0xf3, 0xb0, 0xec, 0x92, 0x25, 0x6a, 0x2e, 0x82,
-	0xe2, 0x34, 0x28, 0xbb, 0xf7, 0xde, 0x7c, 0xf2, 0x78, 0x1e, 0x5c, 0x26, 0x36, 0x5f, 0xdf, 0xc5,
-	0xa4, 0xcd, 0x2c, 0xb7, 0xc6, 0x1b, 0xec, 0x7a, 0x95, 0xc8, 0x2f, 0x06, 0xc3, 0x37, 0x47, 0xf6,
-	0x79, 0xfb, 0x6e, 0x70, 0x02, 0xc3, 0xc2, 0x91, 0xdd, 0x2a, 0x4d, 0x9c, 0x4d, 0xd9, 0xcd, 0xe9,
-	0xf2, 0xdf, 0xe3, 0x15, 0xf4, 0x53, 0x67, 0xec, 0x9a, 0x77, 0xc2, 0xa0, 0x36, 0x78, 0x01, 0x9d,
-	0x34, 0xe6, 0xdd, 0x10, 0x75, 0xd2, 0x18, 0xa7, 0x30, 0xca, 0x37, 0x66, 0x4b, 0x2f, 0x85, 0x5e,
-	0x91, 0xe5, 0xbd, 0x30, 0x68, 0x47, 0xd5, 0x8e, 0x55, 0x6a, 0xfd, 0xe6, 0x51, 0xed, 0x78, 0xbf,
-	0xde, 0xd1, 0x78, 0x44, 0xe8, 0x69, 0x95, 0x66, 0x7c, 0x10, 0xf2, 0xa0, 0xa5, 0x84, 0xb3, 0x27,
-	0xca, 0x32, 0xb3, 0xa4, 0x8f, 0x82, 0x9c, 0xaf, 0x98, 0xd6, 0xff, 0x82, 0x96, 0xd7, 0x00, 0x47,
-	0x26, 0xcf, 0x76, 0xc8, 0xe1, 0x44, 0x93, 0x73, 0x2a, 0x69, 0xa0, 0xc6, 0xca, 0x05, 0x8c, 0x5e,
-	0xbd, 0xf2, 0x85, 0xab, 0x41, 0x84, 0xde, 0xda, 0xc4, 0x35, 0xd5, 0x5f, 0x06, 0x8d, 0x63, 0xe8,
-	0x6a, 0x97, 0x1c, 0x8f, 0xac, 0xe4, 0x7c, 0x0e, 0x55, 0x51, 0x78, 0x0b, 0x83, 0x07, 0x4b, 0xca,
-	0x13, 0x9e, 0xcf, 0xbc, 0x4a, 0x66, 0x4d, 0x69, 0x93, 0x71, 0xb0, 0xad, 0x77, 0x65, 0x74, 0xcf,
-	0xbf, 0x0f, 0x82, 0xed, 0x0f, 0x82, 0xfd, 0x1e, 0x04, 0xfb, 0x2c, 0x45, 0xb4, 0x2f, 0x45, 0xf4,
-	0x53, 0x8a, 0x68, 0x35, 0x08, 0xdd, 0x2f, 0xfe, 0x02, 0x00, 0x00, 0xff, 0xff, 0x0c, 0x89, 0x63,
-	0x42, 0x8e, 0x01, 0x00, 0x00,
+	// 470 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x93, 0x4f, 0x8a, 0xdb, 0x30,
+	0x14, 0xc6, 0xa3, 0xfc, 0xcf, 0xcb, 0xb4, 0x1d, 0x44, 0x17, 0x62, 0x28, 0x26, 0x78, 0x51, 0x02,
+	0x03, 0x2e, 0x4c, 0x6e, 0x30, 0x13, 0x68, 0x03, 0x65, 0x3a, 0x38, 0xcc, 0x01, 0x14, 0xfb, 0xd5,
+	0x63, 0xb0, 0x2d, 0x57, 0x92, 0x17, 0xd3, 0x53, 0xf4, 0x04, 0xdd, 0xf5, 0x2a, 0xa5, 0xcb, 0x59,
+	0x76, 0x59, 0x92, 0x8b, 0x94, 0x27, 0xd9, 0x9d, 0x2c, 0xba, 0xc8, 0xee, 0xfb, 0xde, 0xfb, 0x24,
+	0xfd, 0xfc, 0x24, 0xc3, 0xab, 0x4c, 0xd7, 0xc9, 0xbb, 0x14, 0x4b, 0x15, 0xd5, 0x5a, 0x59, 0xc5,
+	0x07, 0x56, 0x66, 0xe1, 0x77, 0x06, 0xd3, 0x7b, 0x83, 0x7a, 0x53, 0x7d, 0x56, 0xfc, 0x02, 0xa6,
+	0x8d, 0x41, 0x5d, 0xc9, 0x12, 0x05, 0x5b, 0xb0, 0xe5, 0x2c, 0xfe, 0xe7, 0xf9, 0x6b, 0x18, 0xe5,
+	0x46, 0xe9, 0x44, 0xf4, 0x5d, 0xc3, 0x1b, 0xfe, 0x12, 0xfa, 0x79, 0x2a, 0x06, 0xae, 0xd4, 0xcf,
+	0x53, 0xbe, 0x80, 0x79, 0xfd, 0xa0, 0x2a, 0xbc, 0x6d, 0xca, 0x1d, 0x6a, 0x31, 0x74, 0x8d, 0xe3,
+	0x12, 0x9d, 0xb1, 0xcb, 0xb5, 0x7d, 0x58, 0xcb, 0x47, 0x31, 0xf2, 0x67, 0x74, 0x9e, 0x73, 0x18,
+	0x96, 0x32, 0x2f, 0xc4, 0xd8, 0xd5, 0x9d, 0x0e, 0x7f, 0xf4, 0x61, 0x7e, 0xa7, 0x55, 0xda, 0x24,
+	0xd6, 0x31, 0xbe, 0x81, 0x59, 0x67, 0xd7, 0x2d, 0xe4, 0x73, 0x81, 0x28, 0xaf, 0xb5, 0xac, 0xd2,
+	0x8e, 0xd2, 0x19, 0xda, 0xf7, 0x96, 0xbe, 0xc9, 0x73, 0x3a, 0xcd, 0xcf, 0x61, 0xf0, 0xa9, 0x48,
+	0x5b, 0x42, 0x92, 0xb4, 0xf6, 0xa3, 0xdc, 0x61, 0xd1, 0x62, 0x79, 0x43, 0xd5, 0x1b, 0x55, 0x28,
+	0xdd, 0x42, 0x79, 0x43, 0x14, 0x5b, 0x59, 0xe0, 0x9d, 0xce, 0x13, 0x14, 0x93, 0x05, 0x5b, 0xb2,
+	0xf8, 0xb9, 0x40, 0x6b, 0x7c, 0x67, 0xea, 0x3a, 0xde, 0x10, 0xc5, 0x36, 0xff, 0x8a, 0x62, 0xe6,
+	0x29, 0x48, 0x13, 0xc5, 0xb6, 0x29, 0x05, 0x2c, 0xd8, 0x72, 0x14, 0x93, 0xa4, 0xf9, 0xdc, 0xd7,
+	0xa9, 0xb4, 0xb8, 0x49, 0xc5, 0xdc, 0xcf, 0xa7, 0xf3, 0xd4, 0x5b, 0x63, 0x81, 0xae, 0x77, 0xe6,
+	0x7b, 0x9d, 0x0f, 0x43, 0x38, 0xfb, 0x80, 0x45, 0xa1, 0x62, 0xfc, 0xd2, 0xa0, 0xb1, 0x74, 0xda,
+	0xd1, 0x3d, 0x3a, 0x1d, 0xbe, 0x05, 0x68, 0x33, 0x75, 0xf1, 0xc8, 0x05, 0x4c, 0x4a, 0x34, 0x46,
+	0x66, 0x5d, 0xa8, 0xb3, 0xe1, 0x0a, 0xe6, 0x5b, 0x2b, 0x6d, 0x63, 0x7c, 0x90, 0xc3, 0x30, 0x51,
+	0xa9, 0x4f, 0x8d, 0x62, 0xa7, 0x09, 0xbc, 0x34, 0x59, 0x3b, 0x66, 0x92, 0x57, 0x2b, 0x18, 0xd2,
+	0x43, 0xe2, 0x97, 0x30, 0xbe, 0xd1, 0x28, 0x2d, 0xf2, 0x17, 0x91, 0x95, 0x59, 0xd4, 0xbd, 0xae,
+	0x8b, 0x73, 0x67, 0x8f, 0x36, 0x0e, 0x7b, 0x57, 0x3f, 0x19, 0x4c, 0x6a, 0x7f, 0x7b, 0x3c, 0x82,
+	0xf1, 0xa6, 0x32, 0xa8, 0x2d, 0xf7, 0xc9, 0xa3, 0x5b, 0xff, 0xdf, 0x5a, 0x7e, 0x09, 0x83, 0xf7,
+	0x78, 0x6a, 0x38, 0x82, 0xb1, 0x1f, 0xe3, 0xe9, 0x79, 0x3f, 0xda, 0xd3, 0xf2, 0xd7, 0xe2, 0xd7,
+	0x3e, 0x60, 0x4f, 0xfb, 0x80, 0xfd, 0xd9, 0x07, 0xec, 0xdb, 0x21, 0xe8, 0x3d, 0x1d, 0x82, 0xde,
+	0xef, 0x43, 0xd0, 0xdb, 0x8d, 0xdd, 0xdf, 0xb6, 0xfa, 0x1b, 0x00, 0x00, 0xff, 0xff, 0x38, 0xcf,
+	0xa2, 0x84, 0x80, 0x03, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -291,74 +436,256 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// TagClient is the client API for Tag service.
+// UserClient is the client API for User service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type TagClient interface {
+type UserClient interface {
 	// 定義接口 create
 	Create(ctx context.Context, in *UserInfo, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
-type tagClient struct {
+type userClient struct {
 	cc *grpc.ClientConn
 }
 
-func NewTagClient(cc *grpc.ClientConn) TagClient {
-	return &tagClient{cc}
+func NewUserClient(cc *grpc.ClientConn) UserClient {
+	return &userClient{cc}
 }
 
-func (c *tagClient) Create(ctx context.Context, in *UserInfo, opts ...grpc.CallOption) (*StatusReply, error) {
+func (c *userClient) Create(ctx context.Context, in *UserInfo, opts ...grpc.CallOption) (*StatusReply, error) {
 	out := new(StatusReply)
-	err := c.cc.Invoke(ctx, "/tag.tag/Create", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/tag.User/Create", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// TagServer is the server API for Tag service.
-type TagServer interface {
+// UserServer is the server API for User service.
+type UserServer interface {
 	// 定義接口 create
 	Create(context.Context, *UserInfo) (*StatusReply, error)
 }
 
-// UnimplementedTagServer can be embedded to have forward compatible implementations.
-type UnimplementedTagServer struct {
+// UnimplementedUserServer can be embedded to have forward compatible implementations.
+type UnimplementedUserServer struct {
 }
 
-func (*UnimplementedTagServer) Create(ctx context.Context, req *UserInfo) (*StatusReply, error) {
+func (*UnimplementedUserServer) Create(ctx context.Context, req *UserInfo) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
 }
 
-func RegisterTagServer(s *grpc.Server, srv TagServer) {
-	s.RegisterService(&_Tag_serviceDesc, srv)
+func RegisterUserServer(s *grpc.Server, srv UserServer) {
+	s.RegisterService(&_User_serviceDesc, srv)
 }
 
-func _Tag_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _User_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UserInfo)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TagServer).Create(ctx, in)
+		return srv.(UserServer).Create(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tag.tag/Create",
+		FullMethod: "/tag.User/Create",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TagServer).Create(ctx, req.(*UserInfo))
+		return srv.(UserServer).Create(ctx, req.(*UserInfo))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-var _Tag_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "tag.tag",
-	HandlerType: (*TagServer)(nil),
+var _User_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "tag.User",
+	HandlerType: (*UserServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Create",
-			Handler:    _Tag_Create_Handler,
+			Handler:    _User_Create_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "grpc/demo.proto",
+}
+
+// ProductClient is the client API for Product service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type ProductClient interface {
+	// 插入接口
+	Insert(ctx context.Context, in *ProductInfo, opts ...grpc.CallOption) (*StatusReply, error)
+	Get(ctx context.Context, in *ProductInfo, opts ...grpc.CallOption) (*StatusReply, error)
+	Update(ctx context.Context, in *ProductInfo, opts ...grpc.CallOption) (*StatusReply, error)
+	Delete(ctx context.Context, in *ProductInfo, opts ...grpc.CallOption) (*StatusReply, error)
+}
+
+type productClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewProductClient(cc *grpc.ClientConn) ProductClient {
+	return &productClient{cc}
+}
+
+func (c *productClient) Insert(ctx context.Context, in *ProductInfo, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/tag.product/Insert", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productClient) Get(ctx context.Context, in *ProductInfo, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/tag.product/Get", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productClient) Update(ctx context.Context, in *ProductInfo, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/tag.product/Update", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productClient) Delete(ctx context.Context, in *ProductInfo, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/tag.product/Delete", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// ProductServer is the server API for Product service.
+type ProductServer interface {
+	// 插入接口
+	Insert(context.Context, *ProductInfo) (*StatusReply, error)
+	Get(context.Context, *ProductInfo) (*StatusReply, error)
+	Update(context.Context, *ProductInfo) (*StatusReply, error)
+	Delete(context.Context, *ProductInfo) (*StatusReply, error)
+}
+
+// UnimplementedProductServer can be embedded to have forward compatible implementations.
+type UnimplementedProductServer struct {
+}
+
+func (*UnimplementedProductServer) Insert(ctx context.Context, req *ProductInfo) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Insert not implemented")
+}
+func (*UnimplementedProductServer) Get(ctx context.Context, req *ProductInfo) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
+}
+func (*UnimplementedProductServer) Update(ctx context.Context, req *ProductInfo) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
+}
+func (*UnimplementedProductServer) Delete(ctx context.Context, req *ProductInfo) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
+}
+
+func RegisterProductServer(s *grpc.Server, srv ProductServer) {
+	s.RegisterService(&_Product_serviceDesc, srv)
+}
+
+func _Product_Insert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProductInfo)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServer).Insert(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tag.product/Insert",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServer).Insert(ctx, req.(*ProductInfo))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Product_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProductInfo)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServer).Get(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tag.product/Get",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServer).Get(ctx, req.(*ProductInfo))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Product_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProductInfo)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServer).Update(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tag.product/Update",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServer).Update(ctx, req.(*ProductInfo))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Product_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProductInfo)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServer).Delete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tag.product/Delete",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServer).Delete(ctx, req.(*ProductInfo))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _Product_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "tag.product",
+	HandlerType: (*ProductServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "Insert",
+			Handler:    _Product_Insert_Handler,
+		},
+		{
+			MethodName: "Get",
+			Handler:    _Product_Get_Handler,
+		},
+		{
+			MethodName: "Update",
+			Handler:    _Product_Update_Handler,
+		},
+		{
+			MethodName: "Delete",
+			Handler:    _Product_Delete_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -424,6 +751,109 @@ func (m *UserInfo) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.Username)
 		copy(dAtA[i:], m.Username)
 		i = encodeVarintDemo(dAtA, i, uint64(len(m.Username)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *ProductInfo) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ProductInfo) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ProductInfo) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.DeleteId) > 0 {
+		i -= len(m.DeleteId)
+		copy(dAtA[i:], m.DeleteId)
+		i = encodeVarintDemo(dAtA, i, uint64(len(m.DeleteId)))
+		i--
+		dAtA[i] = 0x62
+	}
+	if len(m.UpdateId) > 0 {
+		i -= len(m.UpdateId)
+		copy(dAtA[i:], m.UpdateId)
+		i = encodeVarintDemo(dAtA, i, uint64(len(m.UpdateId)))
+		i--
+		dAtA[i] = 0x5a
+	}
+	if m.Sum != 0 {
+		i = encodeVarintDemo(dAtA, i, uint64(m.Sum))
+		i--
+		dAtA[i] = 0x50
+	}
+	if len(m.Size_) > 0 {
+		i -= len(m.Size_)
+		copy(dAtA[i:], m.Size_)
+		i = encodeVarintDemo(dAtA, i, uint64(len(m.Size_)))
+		i--
+		dAtA[i] = 0x4a
+	}
+	if m.Price != 0 {
+		i -= 8
+		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.Price))))
+		i--
+		dAtA[i] = 0x41
+	}
+	if m.SalePrice != 0 {
+		i -= 8
+		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.SalePrice))))
+		i--
+		dAtA[i] = 0x39
+	}
+	if len(m.Color) > 0 {
+		i -= len(m.Color)
+		copy(dAtA[i:], m.Color)
+		i = encodeVarintDemo(dAtA, i, uint64(len(m.Color)))
+		i--
+		dAtA[i] = 0x32
+	}
+	if len(m.Label) > 0 {
+		i -= len(m.Label)
+		copy(dAtA[i:], m.Label)
+		i = encodeVarintDemo(dAtA, i, uint64(len(m.Label)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.Old) > 0 {
+		i -= len(m.Old)
+		copy(dAtA[i:], m.Old)
+		i = encodeVarintDemo(dAtA, i, uint64(len(m.Old)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintDemo(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Brand) > 0 {
+		i -= len(m.Brand)
+		copy(dAtA[i:], m.Brand)
+		i = encodeVarintDemo(dAtA, i, uint64(len(m.Brand)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.ProductID) > 0 {
+		i -= len(m.ProductID)
+		copy(dAtA[i:], m.ProductID)
+		i = encodeVarintDemo(dAtA, i, uint64(len(m.ProductID)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -563,6 +993,60 @@ func (m *UserInfo) Size() (n int) {
 		n += 1 + l + sovDemo(uint64(l))
 	}
 	l = len(m.Mail)
+	if l > 0 {
+		n += 1 + l + sovDemo(uint64(l))
+	}
+	return n
+}
+
+func (m *ProductInfo) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.ProductID)
+	if l > 0 {
+		n += 1 + l + sovDemo(uint64(l))
+	}
+	l = len(m.Brand)
+	if l > 0 {
+		n += 1 + l + sovDemo(uint64(l))
+	}
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovDemo(uint64(l))
+	}
+	l = len(m.Old)
+	if l > 0 {
+		n += 1 + l + sovDemo(uint64(l))
+	}
+	l = len(m.Label)
+	if l > 0 {
+		n += 1 + l + sovDemo(uint64(l))
+	}
+	l = len(m.Color)
+	if l > 0 {
+		n += 1 + l + sovDemo(uint64(l))
+	}
+	if m.SalePrice != 0 {
+		n += 9
+	}
+	if m.Price != 0 {
+		n += 9
+	}
+	l = len(m.Size_)
+	if l > 0 {
+		n += 1 + l + sovDemo(uint64(l))
+	}
+	if m.Sum != 0 {
+		n += 1 + sovDemo(uint64(m.Sum))
+	}
+	l = len(m.UpdateId)
+	if l > 0 {
+		n += 1 + l + sovDemo(uint64(l))
+	}
+	l = len(m.DeleteId)
 	if l > 0 {
 		n += 1 + l + sovDemo(uint64(l))
 	}
@@ -837,6 +1321,388 @@ func (m *UserInfo) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.Mail = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDemo(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthDemo
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthDemo
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ProductInfo) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDemo
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ProductInfo: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ProductInfo: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ProductID", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDemo
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDemo
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDemo
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ProductID = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Brand", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDemo
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDemo
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDemo
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Brand = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDemo
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDemo
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDemo
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Old", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDemo
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDemo
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDemo
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Old = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Label", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDemo
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDemo
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDemo
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Label = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Color", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDemo
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDemo
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDemo
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Color = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 7:
+			if wireType != 1 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SalePrice", wireType)
+			}
+			var v uint64
+			if (iNdEx + 8) > l {
+				return io.ErrUnexpectedEOF
+			}
+			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
+			iNdEx += 8
+			m.SalePrice = float64(math.Float64frombits(v))
+		case 8:
+			if wireType != 1 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Price", wireType)
+			}
+			var v uint64
+			if (iNdEx + 8) > l {
+				return io.ErrUnexpectedEOF
+			}
+			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
+			iNdEx += 8
+			m.Price = float64(math.Float64frombits(v))
+		case 9:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Size_", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDemo
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDemo
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDemo
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Size_ = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 10:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Sum", wireType)
+			}
+			m.Sum = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDemo
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Sum |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 11:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field UpdateId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDemo
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDemo
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDemo
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.UpdateId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 12:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DeleteId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDemo
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDemo
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDemo
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DeleteId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

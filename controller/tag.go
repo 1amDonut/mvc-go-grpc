@@ -2,8 +2,10 @@ package controller
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"net/http"
+	"reflect"
 	"strings"
 	pb "tag/grpc"
 	tag "tag/module"
@@ -15,82 +17,166 @@ import (
 )
 
 // TagServer -
-type TagServer struct {
+type UserServer struct {
+}
+type ProdectServer struct {
 }
 
-func createToModel(in *pb.UserInfo) {
+func exampleToModel(in *pb.UserInfo) []byte {
+	type Person struct {
+		Id   int    `json:"id"`
+		Name string `json:name`
+	}
 
+	data := []byte(`{"id" : 1 , "name" : "josh" }`)
+	var person Person
+	json.Unmarshal(data, &person)
+	jsondata, _ := json.Marshal(person)
+	return jsondata
+}
+
+func ToJson(in *pb.UserInfo) []byte {
+
+	type Person struct {
+		Id   int
+		Name string
+	}
+	var person = []Person{
+		{Id: 1, Name: in.Username},
+	}
+
+	// sturct 轉換json字串
+	data, _ := json.Marshal(person)
+
+	return data
+
+}
+
+func createToModel(in *pb.UserInfo) *tag.Tag {
+
+	return &tag.Tag{
+
+		Name:        in.GetUsername(),
+		Nationality: in.GetIsorc(),
+		ID:          in.GetId(),
+		PhoneNumber: in.GetPhoneNumber(),
+		BirthDay:    in.GetBirthDay(),
+		Mail:        in.GetMail(),
+	}
+}
+
+func productToModel(in *pb.ProductInfo) *tag.Product {
+	return &tag.Product{
+		ProductID: in.GetProductID(),
+		Brand:     in.GetBrand(),
+		Name:      in.GetName(),
+		Old:       in.GetOld(),
+		Label:     in.GetLabel(),
+		Color:     in.GetColor(),
+		SalePrice: in.GetSalePrice(),
+		Price:     in.GetPrice(),
+		Size:      in.GetSize_(),
+		Sum:       in.GetSum(),
+	}
+}
+
+func ProductUpdateToModel(in *pb.ProductInfo) *tag.Product {
+	return &tag.Product{
+		ProductID: in.GetProductID(),
+		Brand:     in.GetBrand(),
+		Name:      in.GetName(),
+		Old:       in.GetOld(),
+		Label:     in.GetLabel(),
+		Color:     in.GetColor(),
+		SalePrice: in.GetSalePrice(),
+		Price:     in.GetPrice(),
+		Size:      in.GetSize_(),
+		Sum:       in.GetSum(),
+	}
+}
+
+func ProdectDeleteToModel(in *pb.ProductInfo) *tag.Product {
+	return &tag.Product{
+		ProductID: in.GetProductID(),
+	}
 }
 
 // Creat -
-func (s *TagServer) Create(ctx context.Context, in *pb.UserInfo) (*pb.StatusReply, error) {
-	// Get user and member from the query string
-	// u := new(tag.Tag)
-	// // Bind 屬於url form-data 方式
-	// if err := e.Bind(u); err != nil {
-	// 	return r.FORMATERROR
-	// }
-	// // 確認是否重複
-	// num, err := tag.CheckRepeat(u.Name)
-	// if err != nil {
-	// 	return r.CHECKREPEATERROR
-	// }
-	// if num > 0 {
-	// 	return r.REPEATERROR //	目前問題是當有重複時會返回 Internal Server Error, 500
-	// }
+func (s *UserServer) Create(ctx context.Context, in *pb.UserInfo) (*pb.StatusReply, error) {
+	// jsondata := ToJson(in)
+	// fmt.Println(string(jsondata))
+	tagModel := createToModel(in)
 
-	// err = tag.Creat(u)
+	// // 確認是否重複
+	num, err := tag.CheckRepeat(tagModel.Name)
+	if err != nil {
+		fmt.Println(r.CHECKREPEATERROR)
+		fmt.Println(reflect.TypeOf(r.CHECKREPEATERROR))
+		// return r.CHECKREPEATERROR
+		// return &pb.StatusReply{Code: 0, Msg: string(r.CHECKREPEATERROR)}, status.Error(codes.OK, "success")
+
+	}
+	if num > 0 {
+		fmt.Println(r.REPEATERROR)
+		fmt.Println(reflect.TypeOf(r.REPEATERROR))
+		// return r.REPEATERROR //	目前問題是當有重複時會返回 Internal Server Error, 500
+	}
+
+	err = tag.Creat(tagModel)
+
+	// // if err != nil {
+	// // 	return e.JSON(http.StatusOK, r.E(err, 1))
+	// // }
 	// if err != nil {
-	// 	return e.JSON(http.StatusOK, r.E(err, 1))
+	// 	return &pb.StatusReply{Code: 0, Msg: "Error"}, status.Error(codes.OK, "success")
+
 	// }
-	fmt.Print(ctx)
-	// return e.JSON(http.StatusOK, r.R(err))
 	return &pb.StatusReply{Code: 0, Msg: "Succes"}, status.Error(codes.OK, "success")
+
+	// return e.JSON(http.StatusOK, r.R(err))
 }
 
 // Post
-func Insert(e echo.Context) error {
-
+func (s *ProdectServer) Insert(ctx context.Context, in *pb.ProductInfo) (*pb.StatusReply, error) {
+	// new(tag) same &tag
+	productModel := productToModel(in)
 	// Get product data
-	u := new(tag.Product)
 
-	if err := e.Bind(u); err != nil {
-		return r.FORMATERROR
-	}
 	// 驗證有無空值
-	if e := e.Validate(u); e != nil {
-		return r.FORMATERROR
-	}
+	// if e := e.Validate(u); e != nil {
+	// 	return r.FORMATERROR
+	// }
 	// 確認產品序號是否重複
-	num, err := tag.CheckRepeatProduct(u.ProductID)
+	num, err := tag.CheckRepeatProduct(productModel.ProductID)
 	if err != nil {
-		return r.CHECKREPEATERROR
+		fmt.Print(r.CHECKREPEATERROR)
+		// return r.CHECKREPEATERROR
 	}
 	if num > 0 {
-		return r.REPEATERROR //目前問題是當有重複時返回 nternal Server Error, 500
+		fmt.Println(r.REPEATERROR)
+		// return r.REPEATERROR //目前問題是當有重複時返回 nternal Server Error, 500
 	}
 
-	err = tag.Insert(u)
-	if err != nil {
-		return e.JSON(http.StatusOK, r.E(err, 1))
+	resultErr := tag.Insert(productModel)
+	if resultErr != nil {
+		fmt.Println("success")
+		// return e.JSON(http.StatusOK, r.E(err, 1))
 	}
+	// fmt.Println(result)
+	return &pb.StatusReply{Code: 0, Msg: "success"}, status.Error(codes.OK, "success")
 
-	return e.JSON(http.StatusOK, r.R(err))
 }
 
 // Get -
-func Get(e echo.Context) error {
-	l := new(tag.TagListBinder)
-	if err := e.Bind(l); err != nil {
-		return r.FORMATERROR
-	}
-	// l.Skip = l.Size * (l.Page - 1)
-	t, err := tag.Get(l.Page, l.Size)
-	if err != nil {
-		return e.JSON(http.StatusOK, r.E(err, 1))
-	}
+func (s *ProdectServer) Get(ctx context.Context, in *pb.ProductInfo) (*pb.StatusReply, error) {
 
-	return e.JSON(http.StatusOK, r.R(t))
+	// t, err := tag.Search(code)
+	// if err != nil {
+	// 	return e.JSON(http.StatusOK, r.E(err, 1))
+	// }
+
+	return &pb.StatusReply{Code: 0, Msg: "success"}, status.Error(codes.OK, "success")
+
 }
 
 // GetOne -
@@ -106,41 +192,39 @@ func GetOne(e echo.Context) error {
 }
 
 // Update -
-func Update(e echo.Context) error {
-	id := strings.TrimSpace(e.Param("id"))
+func (s *ProdectServer) Update(ctx context.Context, in *pb.ProductInfo) (*pb.StatusReply, error) {
 
-	u := new(tag.Tag)
-	if err := e.Bind(u); err != nil {
-		return r.FORMATERROR
-	}
+	// pb convert model
+	productModel := ProductUpdateToModel(in)
 
 	// 確認是否重複
-	num, err := tag.CheckRepeat(u.Name)
+	num, err := tag.CheckRepeatProduct(productModel.Name)
 	if err != nil {
-		return r.CHECKREPEATERROR
+		fmt.Println(r.CHECKREPEATERROR)
 	}
 	if num > 0 {
-		return r.REPEATERROR //	目前問題是當有重複時會返回 Internal Server Error, 500
+		fmt.Println(r.REPEATERROR)
 	}
 
-	err = tag.Update(id, u)
+	err = tag.Update(productModel.ProductID, productModel)
 	if err != nil {
-		return e.JSON(http.StatusOK, r.E(err, 1))
+		fmt.Println(r.E(err, 1))
+		// return e.JSON(http.StatusOK, r.E(err, 1))
 	}
-
-	return e.JSON(http.StatusOK, "update OK!")
+	return &pb.StatusReply{Code: 0, Msg: "success"}, status.Error(codes.OK, "success")
 }
 
 // Delete -
-func Delete(e echo.Context) error {
-	id := strings.TrimSpace(e.Param("id"))
+func (s *ProdectServer) Delete(ctx context.Context, in *pb.ProductInfo) (*pb.StatusReply, error) {
 
-	err := tag.Delete(id)
+	productdata := ProdectDeleteToModel(in)
+	fmt.Println(productdata)
+	// 執行刪除
+	err := tag.Delete(productdata.ProductID)
 	if err != nil {
-		return e.JSON(http.StatusOK, r.E(err, 1))
+		fmt.Print(r.E(err, 1))
 	}
-
-	return e.JSON(http.StatusOK, "delete OK!")
+	return &pb.StatusReply{Code: 0, Msg: "success"}, status.Error(codes.OK, "success")
 }
 
 // Search -

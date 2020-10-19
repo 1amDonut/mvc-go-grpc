@@ -23,8 +23,8 @@ type TagListBinder struct {
 // Tag -
 type Tag struct {
 	Name        string `json:"name"`
-	Nationality int    `json:"nationality"` //isROC
-	ID          int    `json:"id"`
+	Nationality string `json:"nationality"` //isROC
+	ID          string `json:"id"`
 	PhoneNumber string `json:"phoneNumber"`
 	BirthDay    string `json:"birthDay"`
 	Mail        string `json:"mail"`
@@ -32,12 +32,12 @@ type Tag struct {
 
 // User - 賣家資訊
 type User struct {
-	Username    string
-	isROC       bool
-	ID          int
-	phoneNumber int
-	birthDay    string
-	mail        string
+	Name        string `json:"name"`
+	Nationality string `json:"nationality"` //isROC
+	ID          string `json:"id"`
+	PhoneNumber string `json:"phoneNumber"`
+	BirthDay    string `json:"birthDay"`
+	Mail        string `json:"mail"`
 }
 
 // Product - 商品資訊
@@ -51,7 +51,7 @@ type Product struct {
 	SalePrice float64 `json:"salePrice" validate:"required"`
 	Price     float64 `json:"price" validate:"required"`
 	Size      string
-	Sum       int
+	Sum       int32
 }
 
 // checkID -

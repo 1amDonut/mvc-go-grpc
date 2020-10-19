@@ -171,7 +171,7 @@ func GetOne(id string) (*TagListBinder, error) {
 }
 
 // Update -
-func Update(id string, tag *Tag) error {
+func Update(id string, product *Product) error {
 	i, err := checkID(id)
 	if err != nil {
 		return r.OBJECTIDERROR
@@ -190,7 +190,7 @@ func Update(id string, tag *Tag) error {
 
 	update := bson.M{
 		"$set": bson.M{
-			"name": tag.Name,
+			"name": product.Name,
 		},
 	}
 

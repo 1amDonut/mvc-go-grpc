@@ -26,6 +26,7 @@ var serverCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Printf("Start gRPC Server on Port : %v", env.PORT)
 		startgRPC()
+		// run()
 	},
 }
 
@@ -53,6 +54,8 @@ func run() {
 }
 
 func startgRPC() error {
+	// mogodb connect
+	env.Step()
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%s", env.PORT))
 	if err != nil {
 		log.Fatalf("start grpc server error : %v", err)
@@ -79,7 +82,8 @@ func startgRPC() error {
 	// grpc 設定
 
 	// 註冊服務
-	pbdemo.RegisterTagServer(s, &controller.TagServer{})
+	pbdemo.RegisterUserServer(s, &controller.UserServer{})
+	pbdemo.RegisterProductServer(s, &controller.ProdectServer{})
 
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to start server : %v", err)

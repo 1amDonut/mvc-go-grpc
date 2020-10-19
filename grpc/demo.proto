@@ -6,7 +6,7 @@ syntax= "proto3";
 package tag;
 
 // 定義服務 tag
-service tag {
+service User {
     // 定義接口 create
     rpc Create(UserInfo) returns (StatusReply) {}
     // rpc SayHello(HelloRequest) returns (HelloReply) {}
@@ -21,6 +21,31 @@ message UserInfo {
     string mail = 6;
 }
 
+// 服務 - product
+service product {
+    // 插入接口
+    rpc Insert(ProductInfo) returns (StatusReply){}
+    rpc Get(ProductInfo) returns (StatusReply){}
+    rpc Update(ProductInfo) returns (StatusReply){}
+    rpc Delete(ProductInfo) returns (StatusReply){}
+}
+
+message ProductInfo {
+    string ProductID = 1;
+	string Brand = 2;
+	string Name = 3;     
+    string Old = 4;      
+	string Label = 5;     
+	string Color = 6;   
+	double SalePrice = 7;  
+	double Price = 8;
+	string Size = 9;   
+    int32 Sum = 10; 
+    string UpdateId = 11;
+    string DeleteId = 12; 
+}
+
+
 message HelloRequest {
     string name = 1;
 }
@@ -28,6 +53,8 @@ message HelloRequest {
 message HelloReply {
   string message = 1;
 }
+
+
 
 // 
 message StatusReply {
