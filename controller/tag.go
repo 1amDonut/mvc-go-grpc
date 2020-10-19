@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"reflect"
 	"strings"
 	pb "tag/grpc"
 	tag "tag/module"
@@ -111,27 +110,26 @@ func (s *UserServer) Create(ctx context.Context, in *pb.UserInfo) (*pb.StatusRep
 	num, err := tag.CheckRepeat(tagModel.Name)
 	if err != nil {
 		fmt.Println(r.CHECKREPEATERROR)
-		fmt.Println(reflect.TypeOf(r.CHECKREPEATERROR))
 		// return r.CHECKREPEATERROR
-		// return &pb.StatusReply{Code: 0, Msg: string(r.CHECKREPEATERROR)}, status.Error(codes.OK, "success")
+		return &pb.StatusReply{Code: 0, Msg: "名稱重複，請更改名稱"}, status.Error(codes.OK, "success")
 
 	}
 	if num > 0 {
 		fmt.Println(r.REPEATERROR)
-		fmt.Println(reflect.TypeOf(r.REPEATERROR))
-		// return r.REPEATERROR //	目前問題是當有重複時會返回 Internal Server Error, 500
+		return &pb.StatusReply{Code: 0, Msg: "名稱重複，請更改名稱"}, status.Error(codes.OK, "success")
 	}
 
-	err = tag.Creat(tagModel)
+	data, Err := tag.Creat(tagModel)
+	fmt.Println(data)
+	if Err != nil {
+		fmt.Println(r.E(err, 1))
+	}
 
-	// // if err != nil {
-	// // 	return e.JSON(http.StatusOK, r.E(err, 1))
-	// // }
 	// if err != nil {
 	// 	return &pb.StatusReply{Code: 0, Msg: "Error"}, status.Error(codes.OK, "success")
 
 	// }
-	return &pb.StatusReply{Code: 0, Msg: "Succes"}, status.Error(codes.OK, "success")
+	return &pb.StatusReply{Code: 0, Msg: data}, status.Error(codes.OK, "success")
 
 	// return e.JSON(http.StatusOK, r.R(err))
 }
@@ -221,6 +219,7 @@ func (s *ProdectServer) Delete(ctx context.Context, in *pb.ProductInfo) (*pb.Sta
 	fmt.Println(productdata)
 	// 執行刪除
 	err := tag.Delete(productdata.ProductID)
+	fmt.Println(productdata.ProductID)
 	if err != nil {
 		fmt.Print(r.E(err, 1))
 	}

@@ -39,20 +39,23 @@ func CheckRepeat(name string) (int, error) {
 }
 
 // Creat -
-func Creat(tag *Tag) error {
+func Creat(tag *Tag) (string, error) {
 	m, err := mongov2.M()
 	if err != nil {
-		return r.MONGOERROR
+		return "", r.MONGOERROR
 	}
 
 	c := m.Database(D).Collection(C)
-
-	// 插入多条数据
-	_, err = c.InsertOne(context.Background(), tag)
-	if err != nil {
-		return r.INSERTERROR
+	fmt.Println("insert data")
+	// 插入多條数据
+	data, Err := c.InsertOne(context.Background(), tag)
+	if Err != nil {
+		return "", r.INSERTERROR
 	}
-	return nil
+	// data.InsertedID.(string)
+	msg := data.InsertedID.(string)
+	fmt.Println(msg)
+	return "", nil
 }
 
 func CheckRepeatProduct(name string) (int, error) {
@@ -204,19 +207,21 @@ func Update(id string, product *Product) error {
 
 // Delete -
 func Delete(id string) error {
-	i, err := checkID(id)
-	if err != nil {
-		return r.OBJECTIDERROR
-	}
+	fmt.Println(id)
+	// i, err := checkID(id)
+	// fmt.Println(i)
+	// if err != nil {
+	// 	return r.OBJECTIDERROR
+	// }
 
 	m, err := mongov2.M()
 	if err != nil {
 		return r.MONGOERROR
 	}
 
-	c := m.Database(D).Collection(C)
+	c := m.Database(D).Collection(P)
 
-	_, err = c.DeleteOne(context.Background(), bson.M{"_id": i})
+	_, err = c.DeleteOne(context.Background(), bson.M{"productid": id})
 	if err != nil {
 		return r.DELETEERROR
 	}
