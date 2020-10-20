@@ -100,19 +100,26 @@ func ProdectDeleteToModel(in *pb.ProductInfo) *tag.Product {
 	}
 }
 
+func SearchToModel(in *pb.ProductInfo) *tag.Product {
+	return &tag.Product{
+		ProductID: in.GetProductID(),
+	}
+}
+
 // Creat -
 func (s *UserServer) Create(ctx context.Context, in *pb.UserInfo) (*pb.StatusReply, error) {
 	// jsondata := ToJson(in)
 	// fmt.Println(string(jsondata))
 	tagModel := createToModel(in)
 
+	if tagModel.Name == "" {
+		return &pb.StatusReply{Code: 0, Msg: "空值，請輸入名稱"}, status.Error(codes.OK, "success")
+	}
 	// // 確認是否重複
 	num, err := tag.CheckRepeat(tagModel.Name)
 	if err != nil {
 		fmt.Println(r.CHECKREPEATERROR)
 		// return r.CHECKREPEATERROR
-		return &pb.StatusReply{Code: 0, Msg: "名稱重複，請更改名稱"}, status.Error(codes.OK, "success")
-
 	}
 	if num > 0 {
 		fmt.Println(r.REPEATERROR)
@@ -140,10 +147,6 @@ func (s *ProdectServer) Insert(ctx context.Context, in *pb.ProductInfo) (*pb.Sta
 	productModel := productToModel(in)
 	// Get product data
 
-	// 驗證有無空值
-	// if e := e.Validate(u); e != nil {
-	// 	return r.FORMATERROR
-	// }
 	// 確認產品序號是否重複
 	num, err := tag.CheckRepeatProduct(productModel.ProductID)
 	if err != nil {
@@ -157,22 +160,9 @@ func (s *ProdectServer) Insert(ctx context.Context, in *pb.ProductInfo) (*pb.Sta
 
 	resultErr := tag.Insert(productModel)
 	if resultErr != nil {
-		fmt.Println("success")
-		// return e.JSON(http.StatusOK, r.E(err, 1))
+		fmt.Println(r.E(err, 1))
 	}
 	// fmt.Println(result)
-	return &pb.StatusReply{Code: 0, Msg: "success"}, status.Error(codes.OK, "success")
-
-}
-
-// Get -
-func (s *ProdectServer) Get(ctx context.Context, in *pb.ProductInfo) (*pb.StatusReply, error) {
-
-	// t, err := tag.Search(code)
-	// if err != nil {
-	// 	return e.JSON(http.StatusOK, r.E(err, 1))
-	// }
-
 	return &pb.StatusReply{Code: 0, Msg: "success"}, status.Error(codes.OK, "success")
 
 }
@@ -227,12 +217,20 @@ func (s *ProdectServer) Delete(ctx context.Context, in *pb.ProductInfo) (*pb.Sta
 }
 
 // Search -
-func Search(e echo.Context) error {
-	code := strings.TrimSpace(e.FormValue("code"))
-	t, err := tag.Search(code)
+func (s *ProdectServer) Search(ctx context.Context, in *pb.ProductInfo) (*pb.StatusReply, error) {
+	searchdata := SearchToModel(in)
+	// 相似度查詢
+	t, err := tag.Search(searchdata.ProductID)
 	if err != nil {
-		return e.JSON(http.StatusOK, r.E(err, 1))
+		return &pb.StatusReply{Code: 0, Msg: "success"}, status.Error(codes.OK, "success")
+
 	}
 
-	return e.JSON(http.StatusOK, r.R(t))
+	if len(t) > 0 {
+		// 回傳使用者名稱
+		return &pb.StatusReply{Code: 0, Msg: t[0].Name}, status.Error(codes.OK, "success")
+	} else {
+		return &pb.StatusReply{Code: 0, Msg: "查無資料"}, status.Error(codes.OK, "success")
+	}
+
 }

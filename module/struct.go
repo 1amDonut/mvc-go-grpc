@@ -8,7 +8,7 @@ import (
 
 const (
 	D = "local"
-	C = "tag"
+	C = "user"
 	P = "product"
 )
 
@@ -23,7 +23,7 @@ type TagListBinder struct {
 // Tag -
 type Tag struct {
 	Name        string `json:"name"`
-	Nationality string `json:"nationality"` //isROC
+	Nationality int32  `json:"nationality"` //isROC
 	ID          string `json:"id"`
 	PhoneNumber string `json:"phoneNumber"`
 	BirthDay    string `json:"birthDay"`
@@ -33,7 +33,7 @@ type Tag struct {
 // User - 賣家資訊
 type User struct {
 	Name        string `json:"name"`
-	Nationality string `json:"nationality"` //isROC
+	Nationality int32  `json:"nationality"` //isROC
 	ID          string `json:"id"`
 	PhoneNumber string `json:"phoneNumber"`
 	BirthDay    string `json:"birthDay"`

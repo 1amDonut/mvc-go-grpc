@@ -13,51 +13,6 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-// CheckRepeat -
-func CheckRepeat(name string) (int, error) {
-	m, err := mongov2.M()
-	if err != nil {
-		return 0, r.MONGOERROR
-	}
-
-	c := m.Database(D).Collection(C)
-	filter := bson.M{
-		"name": name,
-	}
-	num, err := c.CountDocuments(context.Background(), filter)
-	if err != nil {
-		return 0, r.MONGOERROR
-	}
-
-	count1 := strconv.FormatInt(num, 10) // int64 to string
-	count2, err := strconv.Atoi(count1)  // string to int
-	if err != nil {
-		return 0, r.STRCONVERROR
-	}
-
-	return count2, nil
-}
-
-// Creat -
-func Creat(tag *Tag) (string, error) {
-	m, err := mongov2.M()
-	if err != nil {
-		return "", r.MONGOERROR
-	}
-
-	c := m.Database(D).Collection(C)
-	fmt.Println("insert data")
-	// 插入多條数据
-	data, Err := c.InsertOne(context.Background(), tag)
-	if Err != nil {
-		return "", r.INSERTERROR
-	}
-	// data.InsertedID.(string)
-	msg := data.InsertedID.(string)
-	fmt.Println(msg)
-	return "", nil
-}
-
 func CheckRepeatProduct(name string) (int, error) {
 	m, err := mongov2.M()
 	if err != nil {
@@ -175,20 +130,20 @@ func GetOne(id string) (*TagListBinder, error) {
 
 // Update -
 func Update(id string, product *Product) error {
-	i, err := checkID(id)
-	if err != nil {
-		return r.OBJECTIDERROR
-	}
+	// i, err := checkID(id)
+	// if err != nil {
+	// 	return r.OBJECTIDERROR
+	// }
 
 	m, err := mongov2.M()
 	if err != nil {
 		return r.MONGOERROR
 	}
 
-	c := m.Database(D).Collection(C)
+	c := m.Database(D).Collection(P)
 
 	filter := bson.M{
-		"_id": i,
+		"productid": id,
 	}
 
 	update := bson.M{
@@ -236,8 +191,8 @@ func Search(code string) ([]*TagListBinder, error) {
 		return nil, r.MONGOERROR
 	}
 
-	c := m.Database(D).Collection(C)
-	filter := bson.M{"name": primitive.Regex{Pattern: code}} // 模糊查詢
+	c := m.Database(D).Collection(P)
+	filter := bson.M{"productid": primitive.Regex{Pattern: code}} // 模糊查詢
 
 	cur, err := c.Find(context.Background(), filter)
 	if err != nil {
@@ -255,6 +210,7 @@ func Search(code string) ([]*TagListBinder, error) {
 
 		var k TagListBinder
 		err := cur.Decode(&k)
+		fmt.Print(k)
 		if err != nil {
 			// log.Fatal(err)
 			return nil, r.FINDDECODEERROR

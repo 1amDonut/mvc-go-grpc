@@ -9,12 +9,13 @@ package tag;
 service User {
     // 定義接口 create
     rpc Create(UserInfo) returns (StatusReply) {}
+    
     // rpc SayHello(HelloRequest) returns (HelloReply) {}
 }
 
 message UserInfo {
     string username = 1;
-    string isorc = 2;
+    int32 isorc = 2;
     string id = 3;
     string phoneNumber = 4;
     string birthDay = 5;
@@ -25,7 +26,7 @@ message UserInfo {
 service product {
     // 插入接口
     rpc Insert(ProductInfo) returns (StatusReply){}
-    rpc Get(ProductInfo) returns (StatusReply){}
+    rpc Search(ProductInfo) returns (StatusReply){}
     rpc Update(ProductInfo) returns (StatusReply){}
     rpc Delete(ProductInfo) returns (StatusReply){}
 }
