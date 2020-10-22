@@ -192,6 +192,7 @@ func Search(code string) ([]*TagListBinder, error) {
 	}
 
 	c := m.Database(D).Collection(P)
+	// 修改常數
 	filter := bson.M{"productid": primitive.Regex{Pattern: code}} // 模糊查詢
 
 	cur, err := c.Find(context.Background(), filter)

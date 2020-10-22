@@ -30,6 +30,11 @@ type Tag struct {
 	Mail        string `json:"mail"`
 }
 
+// Slide - 主要結構
+type Slide struct {
+	Data []*Tag `json:"data"`
+}
+
 // User - 賣家資訊
 type User struct {
 	Name        string `json:"name"`

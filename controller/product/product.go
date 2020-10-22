@@ -2,11 +2,10 @@ package controller
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
-	pb "tag/grpc"
+	pb "tag/grpc/product"
 	tag "tag/module"
 	r "tag/resp"
 
@@ -16,52 +15,8 @@ import (
 )
 
 // TagServer -
-type UserServer struct {
-}
+
 type ProdectServer struct {
-}
-
-func exampleToModel(in *pb.UserInfo) []byte {
-	type Person struct {
-		Id   int    `json:"id"`
-		Name string `json:name`
-	}
-
-	data := []byte(`{"id" : 1 , "name" : "josh" }`)
-	var person Person
-	json.Unmarshal(data, &person)
-	jsondata, _ := json.Marshal(person)
-	return jsondata
-}
-
-func ToJson(in *pb.UserInfo) []byte {
-
-	type Person struct {
-		Id   int
-		Name string
-	}
-	var person = []Person{
-		{Id: 1, Name: in.Username},
-	}
-
-	// sturct 轉換json字串
-	data, _ := json.Marshal(person)
-
-	return data
-
-}
-
-func createToModel(in *pb.UserInfo) *tag.Tag {
-
-	return &tag.Tag{
-
-		Name:        in.GetUsername(),
-		Nationality: in.GetIsorc(),
-		ID:          in.GetId(),
-		PhoneNumber: in.GetPhoneNumber(),
-		BirthDay:    in.GetBirthDay(),
-		Mail:        in.GetMail(),
-	}
 }
 
 func productToModel(in *pb.ProductInfo) *tag.Product {
@@ -72,7 +27,7 @@ func productToModel(in *pb.ProductInfo) *tag.Product {
 		Old:       in.GetOld(),
 		Label:     in.GetLabel(),
 		Color:     in.GetColor(),
-		SalePrice: in.GetSalePrice(),
+		SalePrice: in.GetSale_Price(),
 		Price:     in.GetPrice(),
 		Size:      in.GetSize_(),
 		Sum:       in.GetSum(),
@@ -87,7 +42,7 @@ func ProductUpdateToModel(in *pb.ProductInfo) *tag.Product {
 		Old:       in.GetOld(),
 		Label:     in.GetLabel(),
 		Color:     in.GetColor(),
-		SalePrice: in.GetSalePrice(),
+		SalePrice: in.GetSale_Price(),
 		Price:     in.GetPrice(),
 		Size:      in.GetSize_(),
 		Sum:       in.GetSum(),
@@ -104,41 +59,6 @@ func SearchToModel(in *pb.ProductInfo) *tag.Product {
 	return &tag.Product{
 		ProductID: in.GetProductID(),
 	}
-}
-
-// Creat -
-func (s *UserServer) Create(ctx context.Context, in *pb.UserInfo) (*pb.StatusReply, error) {
-	// jsondata := ToJson(in)
-	// fmt.Println(string(jsondata))
-	tagModel := createToModel(in)
-
-	if tagModel.Name == "" {
-		return &pb.StatusReply{Code: 0, Msg: "空值，請輸入名稱"}, status.Error(codes.OK, "success")
-	}
-	// // 確認是否重複
-	num, err := tag.CheckRepeat(tagModel.Name)
-	if err != nil {
-		fmt.Println(r.CHECKREPEATERROR)
-		// return r.CHECKREPEATERROR
-	}
-	if num > 0 {
-		fmt.Println(r.REPEATERROR)
-		return &pb.StatusReply{Code: 0, Msg: "名稱重複，請更改名稱"}, status.Error(codes.OK, "success")
-	}
-
-	data, Err := tag.Creat(tagModel)
-	fmt.Println(data)
-	if Err != nil {
-		fmt.Println(r.E(err, 1))
-	}
-
-	// if err != nil {
-	// 	return &pb.StatusReply{Code: 0, Msg: "Error"}, status.Error(codes.OK, "success")
-
-	// }
-	return &pb.StatusReply{Code: 0, Msg: data}, status.Error(codes.OK, "success")
-
-	// return e.JSON(http.StatusOK, r.R(err))
 }
 
 // Post

@@ -1,0 +1,33 @@
+syntax= "proto3";
+
+// 導入 google timestamp 包
+// import "google/protobuf/timestamp.proto";
+
+package user;
+
+// 定義服務 User
+service User {
+    // 定義接口 create
+    rpc Create(Slide) returns (StatusReply) {}
+}
+
+message Slide {
+    repeated UserInfo data = 1;
+}
+
+message UserInfo {
+    string username = 1;
+    int32 isorc = 2;
+    string id = 3;
+    string phoneNumber = 4;
+    string birthDay = 5;
+    string mail = 6;
+}
+
+
+// 
+message StatusReply {
+    int32 code = 1;
+    string msg = 2;
+    // google.protobuf.Timestamp unix = 3;
+}

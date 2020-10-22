@@ -3,28 +3,7 @@ syntax= "proto3";
 // 導入 google timestamp 包
 // import "google/protobuf/timestamp.proto";
 
-package tag;
-
-// 定義服務 tag
-service User {
-    // 定義接口 create
-    rpc Create(Slide) returns (StatusReply) {}
-    
-    // rpc SayHello(HelloRequest) returns (HelloReply) {}
-}
-
-message Slide {
-    repeated UserInfo data = 1;
-}
-
-message UserInfo {
-    string username = 1;
-    int32 isorc = 2;
-    string id = 3;
-    string phoneNumber = 4;
-    string birthDay = 5;
-    string mail = 6;
-}
+package product;
 
 // 服務 - product
 service product {
@@ -47,20 +26,7 @@ message ProductInfo {
 	double price = 8;
 	string size = 9;   
     int32 sum = 10; 
-    string updateId = 11;
-    string deleteId = 12; 
 }
-
-
-message HelloRequest {
-    string name = 1;
-}
-
-message HelloReply {
-  string message = 1;
-}
-
-
 
 // 
 message StatusReply {

@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"log"
 	"net"
-	"tag/controller"
+	product "tag/controller/product"
+	user "tag/controller/user"
 	"tag/env"
-	pbdemo "tag/grpc"
+	pbproduct "tag/grpc/product"
+	pbuser "tag/grpc/user"
 	"tag/router"
 
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
@@ -61,7 +63,7 @@ func startgRPC() error {
 		log.Fatalf("start grpc server error : %v", err)
 	}
 	l := logrus.New().WithField("service", "demo")
-
+	// NewServer 來建立RPC的服務
 	s := grpc.NewServer(
 		grpc.UnaryInterceptor(
 			grpc_middleware.ChainUnaryServer(
@@ -82,8 +84,8 @@ func startgRPC() error {
 	// grpc 設定
 
 	// 註冊服務
-	pbdemo.RegisterUserServer(s, &controller.UserServer{})
-	pbdemo.RegisterProductServer(s, &controller.ProdectServer{})
+	pbuser.RegisterUserServer(s, &user.UserServer{})
+	pbproduct.RegisterProductServer(s, &product.ProdectServer{})
 
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to start server : %v", err)
